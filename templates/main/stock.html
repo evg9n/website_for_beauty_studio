@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Новости и Акции{% endblock %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/blocks-page37057035.min.css' %}" type="text/css" media="all" onerror="this.loaderr='y';">
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/blocks-page37057035.min.js' %}" charset="utf-8" async onerror="this.loaderr='y';"></script>
+{% endblock %}
+
+{% block content %}
+    <div id="rec600278374" class="r t-rec t-rec_pt_150 t-rec_pb_150" style="padding-top:150px;padding-bottom:150px; " data-record-type="509"><!-- t509 -->
+            <div class="t509">
+                <div class="t-card__container t-container">
+                    <div class="t509__colwrapper t-col t-col_10 t-prefix_1">
+
+                        {% for element in news_and_stocks %}
+
+                            <div class="t-item t-animate" data-animate-style="fadeinright" data-animate-chain="yes">
+                                <div class="t509__col t-col t-col_5 t509__mobileimg" itemscope itemtype="http://schema.org/ImageObject">
+                                    <meta itemprop="image" content="{{ element.photo.url }}">
+                                    <div class="t509__blockimg t-bgimg" data-original="{{ element.photo.url }}" bgimgfield="li_img__1476897493817" data-image-width="460" data-image-height="340px" style="background-image:url(&#x27;{{ element.photo.url }}&#x27;);"></div>
+                                </div>
+                                <div class="t509__col t-col t-col_5 t509__leftcol">
+                                    <div class="t509__textwrapper t-align_left" style="max-width:500px;">
+                                        <div class="t509__content t-valign_middle">
+                                            <div class="t509__box">
+                                                <div class="t-card__title t-heading t-heading_xs" field="li_title__1476897493817" style>{{ element.header }}</div>
+                                                <div class="t-card__descr t-descr t-descr_sm" field="li_descr__1476897493817" style>{{ element.text | linebreaks }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="t509__col t-col t-col_5 t509__rightcol t509__desktopimg">
+                                    <div class="t509__imgwrapper" style itemscope itemtype="http://schema.org/ImageObject">
+                                        <meta itemprop="image" content="{{ element.photo.url }}">
+                                        <div class="t509__blockimg t-bgimg" data-original="{{ element.photo.url }}" bgimgfield="li_img__1476897493817" data-image-width="460" data-image-height="340px" style="background-image:url(&#x27;{{ element.photo.url }}&#x27;);"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="t509__separator t-clear" style></div>
+
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <script>
+                t_onReady(function() {
+                    t_onFuncLoad('t509_setHeight', function() {
+                        window.addEventListener('resize', t_throttle(function() {
+                            t509_setHeight('600278374');
+                        }));
+                        t509_setHeight('600278374');
+                        var rec = document.querySelector('#rec600278374');
+                        if (!rec) return;
+                        var wrapper = rec.querySelector('.t509');
+                        if (wrapper) {
+                            wrapper.addEventListener('displayChanged', function() {
+                                t509_setHeight('600278374');
+                            });
+                        }
+                    });
+                });
+            </script>
+        </div>
+{% endblock %}

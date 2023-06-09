@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Работы{% endblock %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/blocks-page37050696.min.css' %}" type="text/css" media="all" onerror="this.loaderr='y';">
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/blocks-page37050696.min.js' %}" charset="utf-8" async onerror="this.loaderr='y';"></script>
+{% endblock %}
+
+{% block content %}
+    <div id="rec599219572" class="r t-rec t-rec_pt_0 t-rec_pb_0" style="padding-top:0px;padding-bottom:0px;background-color:#000000; " data-animationappear="off" data-record-type="552" data-bg-color="#000000"><!-- t552-->
+            <div class="t552">
+                <div class="t552__container t-container_100">
+                    <div class="t552__container t-container_100">
+
+                    {% for photo in photos %}
+
+                        <div class="t552__tile t552__tile_25" itemscope itemtype="http://schema.org/ImageObject">
+                            <div class="t552__blockimg t552__blockimg_animated t-bgimg" data-original="{{ photo.photo.url }}" bgimgfield="gi_img__0" data-zoom-target="0" data-zoomable="yes" data-img-zoom-url="{{ photo.photo.url }}" style="background: url(&#x27;{{ photo.photo.url }}&#x27;) center center no-repeat; background-size:cover; height:18.75vw;">
+                                <meta itemprop="image" content="{{ photo.photo.url }}">
+                            </div>
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+            </div>
+            <script>
+                t_onReady(function() {
+                    t_onFuncLoad('t552_init', function() {
+                        t552_init('599219572', '0.75');
+                    });
+                });
+            </script>
+        </div>
+{% endblock %}

@@ -1,0 +1,6 @@
+Django==4.1
+Pillow==9.5.0
+mysqlclient
+django-axes
+python-dotenv
+pytz
