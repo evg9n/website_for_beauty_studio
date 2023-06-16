@@ -3,7 +3,7 @@ from django.db.models import QuerySet
 from django.http import HttpRequest
 from django.contrib.sessions.models import Session
 from .models import BaseModel, MainModel, WorksModel, NewsStocksModel, \
-    ContactsModel, HeaderPricesModel, PositionsPricesModel
+    ContactsModel, HeaderPricesModel, PositionsPricesModel, TagPricesModels
 
 
 @admin.register(Session)
@@ -125,27 +125,118 @@ class MainModelAdmin(admin.ModelAdmin):
             list_fields += active_fields
             return list_fields
 
+        elif obj.choices_field in ("head",):
+            description = 'Заголовок - это наименование тега и дополнительная информация, ' \
+                          'Текст - метатег в формате html'
+            field = [(None, {'fields': ('header', 'text',), 'description': description})]
+            list_fields += field
+            list_fields += active_fields
+            return list_fields
+
 
 @admin.register(WorksModel)
 class WorksModelAdmin(admin.ModelAdmin):
     actions = (true_active, false_active,)
-    list_display = ['id', '__str__', 'flag_active', 'date_time_create', 'date_edition', ]
-    list_filter = ['flag_active', 'date_time_create', 'date_edition', ]
+    list_display = ['id', '__str__', "get_choice", 'flag_active', 'date_time_create', 'date_edition', ]
+    list_filter = ['flag_active', 'date_time_create', 'date_edition', 'choices_field', ]
+    ordering = ('choices_field',)
     readonly_fields = ('date_time_create', 'date_edition',)
+
+    def get_fieldsets(self, request, obj=None):
+        description = 'Индекс - уникальный номер по которому можно регулировать очередность, например сертификаты ' \
+                      'меньшее число будет первым' \
+                      'Выбор - нужно выбрать область которую нужно заполнить/добавить, После заполнения жмите ' \
+                      '"Сохранить и продолжить редактирование"'
+
+        active_fields = [
+            ('Активность', {'fields': ('flag_active',),
+                            'classes': ('collapse',),
+                            'description': 'Активность объекта'}),
+            (None, {'fields': ('date_time_create', 'date_edition',)}),
+        ]
+
+        list_fields = [
+            ('Основное', {'fields': ('id', 'choices_field',), 'description': description},)
+        ]
+
+        if obj is None:
+            return list_fields
+
+        elif obj.choices_field in ("работа",):
+            description = 'Фото - которое будет отображаться, '
+            field = [(None, {'fields': ('photo',), 'description': description})]
+            list_fields += field
+            list_fields += active_fields
+            return list_fields
+
+        elif obj.choices_field in ("head",):
+            description = 'Заголовок - это наименование тега и дополнительная информация, ' \
+                          'Текст - метатег в формате html'
+            field = [(None, {'fields': ('header', 'text',), 'description': description})]
+            list_fields += field
+            list_fields += active_fields
+            return list_fields
 
 
 @admin.register(NewsStocksModel)
 class NewsStocksModelAdmin(admin.ModelAdmin):
     actions = (true_active, false_active,)
+    list_display = ['id', 'get_choice', 'header', 'flag_active', 'date_time_create', 'date_edition', ]
+    list_filter = ['flag_active', 'choices_field', 'date_time_create', 'date_edition', ]
+    ordering = ('choices_field',)
+    readonly_fields = ('date_time_create', 'date_edition',)
+
+    def get_fieldsets(self, request, obj=None):
+        description = 'Индекс - уникальный номер по которому можно регулировать очередность, например сертификаты ' \
+                      'меньшее число будет первым' \
+                      'Выбор - нужно выбрать область которую нужно заполнить/добавить, После заполнения жмите ' \
+                      '"Сохранить и продолжить редактирование"'
+
+        active_fields = [
+            ('Активность', {'fields': ('flag_active',),
+                            'classes': ('collapse',),
+                            'description': 'Активность объекта'}),
+            (None, {'fields': ('date_time_create', 'date_edition',)}),
+        ]
+
+        list_fields = [
+            ('Основное', {'fields': ('id', 'choices_field',), 'description': description},)
+        ]
+
+        if obj is None:
+            return list_fields
+
+        elif obj.choices_field in ("новость и акция",):
+            description = 'Заголовок - заголовок новости или акции, ' \
+                          'Текст - текст новости или акции, ' \
+                          'Фото - фото новости или акции'
+            field = [(None, {'fields': ('header', 'text', 'photo',), 'description': description})]
+            list_fields += field
+            list_fields += active_fields
+            return list_fields
+
+        elif obj.choices_field in ("head",):
+            description = 'Заголовок - это наименование тега и дополнительная информация, ' \
+                          'Текст - метатег в формате html'
+            field = [(None, {'fields': ('header', 'text',), 'description': description})]
+            list_fields += field
+            list_fields += active_fields
+            return list_fields
+
+
+@admin.register(HeaderPricesModel)
+class HeaderPricesModelAdmin(admin.ModelAdmin):
+    actions = (true_active, false_active,)
     list_display = ['id', 'header', 'flag_active', 'date_time_create', 'date_edition', ]
     list_filter = ['flag_active', 'date_time_create', 'date_edition', ]
+    ordering = ('date_edition',)
     readonly_fields = ('date_time_create', 'date_edition',)
 
 
 @admin.register(ContactsModel)
 class ContactsModelAdmin(admin.ModelAdmin):
     actions = (true_active, false_active,)
-    list_display = ['__str__', 'flag_active', 'date_time_create', 'date_edition', ]
+    list_display = ['__str__', 'flag_active', "header", 'date_time_create', 'date_edition', ]
     list_filter = ('flag_active', 'choices_field', 'date_time_create', 'date_edition',)
     ordering = ('choices_field',)
     readonly_fields = ('date_time_create', 'date_edition',)
@@ -191,9 +282,17 @@ class ContactsModelAdmin(admin.ModelAdmin):
             list_fields += active_fields
             return list_fields
 
+        elif obj.choices_field in ("head",):
+            description = 'Заголовок - это наименование тега и дополнительная информация, ' \
+                          'Текст - метатег в формате html'
+            field = [(None, {'fields': ('header', 'text',), 'description': description})]
+            list_fields += field
+            list_fields += active_fields
+            return list_fields
 
-@admin.register(HeaderPricesModel)
-class HeaderPricesModelAdmin(admin.ModelAdmin):
+
+@admin.register(TagPricesModels)
+class TagPricesModelsAdmin(admin.ModelAdmin):
     actions = (true_active, false_active,)
     list_display = ['id', 'header', 'flag_active', 'date_time_create', 'date_edition', ]
     list_filter = ['header', 'flag_active', 'date_time_create', 'date_edition', ]

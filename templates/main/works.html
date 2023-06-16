@@ -2,7 +2,11 @@
 
 {% load static %}
 
-{% block title %}Работы{% endblock %}
+{% block head %}
+    {% for elem in head %}
+        {{ elem | safe }}
+    {% endfor %}
+{% endblock %}
 
 {% block stylesheet %}
     <link rel="stylesheet" href="{% static 'css/blocks-page37050696.min.css' %}" type="text/css" media="all" onerror="this.loaderr='y';">
@@ -13,6 +17,19 @@
 {% endblock %}
 
 {% block content %}
+
+    <div id="rec600912327" class="r t-rec t-rec_pt_90 t-rec_pb_30" style="padding-top:90px;padding-bottom:30px; " data-animationappear="off" data-record-type="792"><!-- T792 -->
+            <div class="t792">
+                <div class="t-section__container t-container">
+                    <div class="t-col t-col_12">
+                        <div class="t-section__topwrapper t-align_center">
+                            <div class="t-section__title t-title t-title_xs t-animate" data-animate-style="fadeinright" data-animate-group="yes" field="btitle"><h1>Работы</h1></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     <div id="rec599219572" class="r t-rec t-rec_pt_0 t-rec_pb_0" style="padding-top:0px;padding-bottom:0px;background-color:#000000; " data-animationappear="off" data-record-type="552" data-bg-color="#000000"><!-- t552-->
             <div class="t552">
                 <div class="t552__container t-container_100">

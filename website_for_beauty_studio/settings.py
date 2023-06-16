@@ -19,6 +19,7 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# print(BASE_DIR)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -65,7 +66,6 @@ MIDDLEWARE = [
 ]
 
 TEMPLATE_DIRS = (BASE_DIR / 'templates',)
-# TEMPLATE_DIRS = (BASE_DIR.parent / 'templates',)
 
 ROOT_URLCONF = 'website_for_beauty_studio.urls'
 
@@ -73,7 +73,6 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [BASE_DIR / 'templates'],
-        # 'DIRS': [BASE_DIR.parent / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -88,21 +87,32 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'website_for_beauty_studio.wsgi.application'
 
+
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
+debag_settings_database = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+
+settings_database = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': environ.get('NAME_DATABASE_LOCAL') if DEBUG else environ.get('NAME_DATABASE'),
-        'USER': environ.get('USER_DATABASE_LOCAL') if DEBUG else environ.get('USER_DATABASE'),
-        'PASSWORD': environ.get('PASSWORD_DATABASE_LOCAL') if DEBUG else environ.get('PASSWORD_DATABASE'),
+        'NAME': environ.get('NAME_DATABASE'),
+        'USER': environ.get('USER_DATABASE'),
+        'PASSWORD': environ.get('PASSWORD_DATABASE'),
         'HOST': environ.get('HOST'),
+        # 'PORT': environ.get('PORT'),
         'OPTIONS': {
             'init_command': "SET time_zone = '+03:00'",
         },
     }
 }
+
+DATABASES = debag_settings_database if DEBUG else settings_database
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -134,8 +144,8 @@ USE_I18N = True
 
 USE_TZ = False
 
-# STATIC_URL = 'static/'
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
+# STATIC_URL = '/static/'
 
 # STATIC_ROOT = BASE_DIR / 'static'
 # STATIC_ROOT = 'static/'
@@ -154,7 +164,7 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 
-MEDIA_ROOT = BASE_DIR / 'media/'
+MEDIA_ROOT = BASE_DIR.parent / 'media/'
 
 # MEDIA_ROOT = BASE_DIR.parent / 'public_html' / 'media/'
 

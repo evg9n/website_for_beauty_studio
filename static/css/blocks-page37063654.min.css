@@ -9,7 +9,7 @@
     background-color:none
 }
 #allrecords a{
-    color:#ff8562;
+    /*color:#ff8562;*/
     text-decoration:none
 }
 #allrecords a,#allrecords button{
@@ -48,7 +48,7 @@
     background-color:none
 }
 .t-records a{
-    color:#ff8562;
+    /*color:#ff8562;*/
     text-decoration:none
 }
 .t-records a[href^=tel]{

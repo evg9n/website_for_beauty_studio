@@ -5,26 +5,16 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--metatextblock-->
-
-    <title>{% block title %}{% endblock %}</title>
-
-    <meta property="og:url" content="http://project7375947.tilda.ws">
-    <meta property="og:title" content="main">
-    <meta property="og:description" content>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block head %}{% endblock %}
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="images/photo_2023-05-29_15-_1.jpg">
-    <link rel="canonical" href="http://project7375947.tilda.ws"><!--/metatextblock-->
-    <meta name="format-detection" content="telephone=no">
-    <meta http-equiv="x-dns-prefetch-control" content="on">
-    <link rel="dns-prefetch" href="https://ws.tildacdn.com">
-    <link rel="dns-prefetch" href="https://static.tildacdn.info">
-    <link rel="shortcut icon" href="{% static 'icon/icon.ico' %}" type="image/x-icon"><!-- Assets -->
+    <link rel="sitemap" type="application/xml" href="{{ request.scheme }}://{{ request.get_host }}{% static 'sitemap.xml' %}" />
+{#    <link rel="canonical" href="{{ request.build_absolute_uri }}">#}
+    <link rel="icon" href="{{ request.scheme }}://{{ request.get_host }}{% static 'icon/favicon.ico' %}" type="image/x-icon">
     <script src="{% static 'js/fallback-1.0.min.js' %}" async charset="utf-8"></script>
     <link rel="stylesheet" href="{% static 'css/grid-3.0.min.css' %}" type="text/css" media="all" onerror="this.loaderr='y';">
-
     {% block stylesheet %}{% endblock %}
-tilda-animation-2.0.min.css
     <link rel="stylesheet" href="{% static 'css/animation-2.0.min.css' %}" type="text/css" media="all" onerror="this.loaderr='y';">
     <link rel="stylesheet" href="{% static 'css/cards-1.0.min.css' %}" type="text/css" media="all" onerror="this.loaderr='y';">
     <link rel="stylesheet" href="{% static 'css/slds-1.4.min.css' %}" type="text/css" media="print" onload="this.media='all';" onerror="this.loaderr='y';"><noscript>
@@ -109,6 +99,7 @@ tilda-animation-2.0.min.css
     <script src="{% static 'js/scripts-3.0.min.js' %}" charset="utf-8" defer onerror="this.loaderr='y';"></script>
 
     {% block scripts %}{% endblock %}
+
 
     <script src="{% static 'js/lazyload-1.3.min.js' %}" charset="utf-8" async onerror="this.loaderr='y';"></script>
     <script src="{% static 'js/animation-2.0.min.js' %}" charset="utf-8" async onerror="this.loaderr='y';"></script>
@@ -541,7 +532,7 @@ tilda-animation-2.0.min.css
             </div>
             <style>
                 .tmenu-mobile {
-                    background-color: #111;
+                    background-color: #000000;
                     display: none;
                     width: 100%;
                     top: 0;
@@ -741,8 +732,8 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#D9000000', en
     </div><!--/allrecords--><!-- Tilda copyright. Don't remove this line -->
     <div class="t-tildalabel " id="tildacopy" data-tilda-sign="7375947#37047426"><a href="https://t.me/evg_9n" class="t-tildalabel__link">
             <div class="t-tildalabel__wrapper">
-                <div class="t-tildalabel__txtleft">Made</div>
-                <div class="t-tildalabel__wrapimg">Evgen</div>
+                <div class="t-tildalabel__txtleft">Разработал</div>
+                <div class="t-tildalabel__wrapimg">DevEvgen</div>
                 <div class="t-tildalabel__txtright">Web</div>
             </div>
         </a></div><!-- Stat -->

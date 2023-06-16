@@ -2,7 +2,11 @@
 {{ logo }}
 {% load static %}
 
-{% block title %}Главная{% endblock %}
+{% block head %}
+    {% for elem in head %}
+        {{ elem | safe }}
+    {% endfor %}
+{% endblock %}
 
 {% block stylesheet %}
     <link rel="stylesheet" href="{% static 'css/blocks-page37047426.min.css' %}" type="text/css" media="all" onerror="this.loaderr='y';">
@@ -299,7 +303,7 @@
                     </div>
                     <div class="t396__filter" data-artboard-recid="599471995"></div>
                     <div class="t396__elem tn-elem tn-elem__5994719951470209944682" data-elem-id="1470209944682" data-elem-type="text" data-field-top-value="-77.5" data-field-left-value="0" data-field-width-value="1160" data-field-axisy-value="center" data-field-axisx-value="center" data-field-container-value="grid" data-field-topunits-value="px" data-field-leftunits-value="px" data-field-heightunits-value data-field-widthunits-value="px" data-animate-prx="mouse" data-animate-prx-dx="25" data-animate-prx-dy="25" data-field-top-res-320-value="-148" data-field-left-res-320-value="0" data-field-width-res-320-value="300" data-field-top-res-480-value="-123" data-field-left-res-480-value="0" data-field-width-res-480-value="460" data-field-top-res-640-value="-135" data-field-left-res-640-value="0" data-field-width-res-640-value="620" data-field-top-res-960-value="-93.5" data-field-left-res-960-value="0" data-field-width-res-960-value="940">
-                        <div class="tn-atom" field="tn_text_1470209944682">{{ header.header }}</div>
+                        <div class="tn-atom" field="tn_text_1470209944682"><h4>{{ header.header }}</h4></div>
                     </div>
                     <div class="t396__elem tn-elem tn-elem__5994719951473778763358" data-elem-id="1473778763358" data-elem-type="text" data-field-top-value="72" data-field-left-value="0" data-field-width-value="840" data-field-axisy-value="center" data-field-axisx-value="center" data-field-container-value="grid" data-field-topunits-value="px" data-field-leftunits-value="px" data-field-heightunits-value data-field-widthunits-value="px" data-animate-prx="mouse" data-animate-prx-dx="25" data-animate-prx-dy="25" data-field-top-res-320-value="20" data-field-left-res-320-value="0" data-field-width-res-320-value="300" data-field-top-res-480-value="40" data-field-left-res-480-value="0" data-field-width-res-480-value="460" data-field-top-res-640-value="80" data-field-left-res-640-value="0" data-field-width-res-640-value="510" data-field-top-res-960-value="50" data-field-left-res-960-value="0" data-field-width-res-960-value="790">
                         <div class="tn-atom" field="tn_text_1473778763358">{{ header.text }}</div>
@@ -336,7 +340,7 @@
                                 <div class="t-item t-animate" data-animate-style="fadeinright" data-animate-chain="yes">
                             <div class="t509__col t-col t-col_5 t509__mobileimg" itemscope itemtype="http://schema.org/ImageObject">
                                 <meta itemprop="image" content="{{ advantage.photo.url }}">
-                                <div class="t509__blockimg t-bgimg" data-original="{{ advantage.photo.url }}" bgimgfield="li_img__1476897493817" data-image-width="460" data-image-height="340px" style="background-image:url(&#x27;images/photo_2023-06-03_15-_1.jpg&#x27;);"></div>
+                                <div class="t509__blockimg t-bgimg" data-original="{{ advantage.photo.url }}" bgimgfield="li_img__1476897493817" data-image-width="460" data-image-height="340px" style="background-image:url(&#x27;{{ advantage.photo.url }}&#x27;);"></div>
                             </div>
                             <div class="t509__col t-col t-col_5 t509__leftcol">
                                 <div class="t509__textwrapper t-align_left" style="max-width:400px;">
@@ -354,7 +358,7 @@
                             <div class="t509__col t-col t-col_5 t509__rightcol t509__desktopimg">
                                 <div class="t509__imgwrapper" style itemscope itemtype="http://schema.org/ImageObject">
                                     <meta itemprop="image" content="{{ advantage.photo.url }}">
-                                    <div class="t509__blockimg t-bgimg" data-original="{{ advantage.photo.url }}" bgimgfield="li_img__1476897493817" data-image-width="460" data-image-height="340px" style="background-image:url(&#x27;images/photo_2023-06-03_15-_1.jpg&#x27;);"></div>
+                                    <div class="t509__blockimg t-bgimg" data-original="{{ advantage.photo.url }}" bgimgfield="li_img__1476897493817" data-image-width="460" data-image-height="340px" style="background-image:url(&#x27;{{ advantage.photo.url }}&#x27;);"></div>
                                 </div>
                             </div>
                         </div>
@@ -365,12 +369,12 @@
                                 <div class="t-item t-animate" data-animate-style="fadeinright" data-animate-chain="yes">
                             <div class="t509__col t-col t-col_5 t509__mobileimg" itemscope itemtype="http://schema.org/ImageObject">
                                 <meta itemprop="image" content="{{ advantage.photo.url }}">
-                                <div class="t509__blockimg t-bgimg" data-original="{{ advantage.photo.url }}" bgimgfield="li_img__1476897695209" data-image-width="460" data-image-height="340px" style="background-image:url(&#x27;images/photo_2023-06-03_15-.jpg&#x27;);"></div>
+                                <div class="t509__blockimg t-bgimg" data-original="{{ advantage.photo.url }}" bgimgfield="li_img__1476897695209" data-image-width="460" data-image-height="340px" style="background-image:url(&#x27;{{ advantage.photo.url }}&#x27;);"></div>
                             </div>
                             <div class="t509__col t-col t-col_5 t509__leftcol t509__desktopimg">
                                 <div class="t509__imgwrapper" style itemscope itemtype="http://schema.org/ImageObject">
                                     <meta itemprop="image" content="{{ advantage.photo.url }}">
-                                    <div class="t509__blockimg t-bgimg" data-original="{{ advantage.photo.url }}" bgimgfield="li_img__1476897695209" data-image-width="460" data-image-height="340px" style="background-image:url(&#x27;images/photo_2023-06-03_15-.jpg&#x27;);"></div>
+                                    <div class="t509__blockimg t-bgimg" data-original="{{ advantage.photo.url }}" bgimgfield="li_img__1476897695209" data-image-width="460" data-image-height="340px" style="background-image:url(&#x27;{{ advantage.photo.url }}&#x27;);"></div>
                                 </div>
                             </div>
                             <div class="t509__col t-col t-col_5 t509__rightcol">
@@ -729,7 +733,7 @@
                                 <div class="t585__content" id="accordion1_599234951" hidden>
                                     <div class="t585__textwrapper">
                                         <div class="t585__text t-descr t-descr_xs" field="li_descr__1480611044356" style>
-                                            {{ element.text }}</div>
+                                            {{ element.text | linebreaks }}</div>
                                     </div>
                                 </div>
                             </div>

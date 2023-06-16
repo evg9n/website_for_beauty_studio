@@ -46,10 +46,11 @@ class MainModel(models.Model):
         ("мастера", "мастера"),
         ("сертификаты", "сертификаты"),
         ("вопрос/ответ", "вопрос/ответ"),
+        ('head', 'head'),
     ]
     choices_field = models.CharField(max_length=12, choices=CHOICES, verbose_name='выбор')
     header = models.CharField(max_length=100, blank=True, default=' ', verbose_name='заголовок')
-    text = models.TextField(max_length=250, blank=True, default=' ', verbose_name='текст')
+    text = models.TextField(max_length=1000, blank=True, default=' ', verbose_name='текст')
     photo = models.ImageField(default='without_photo/without_photo.jpg', upload_to="photos_main/",
                               verbose_name="фотография")
     flag_active = models.BooleanField(default=True, verbose_name='активность')
@@ -72,8 +73,15 @@ class MainModel(models.Model):
 
 class WorksModel(models.Model):
     id = models.IntegerField(db_index=True, unique=True, primary_key=True, auto_created=True, verbose_name='индекс')
+    CHOICES = [
+        ('работа', 'работа'),
+        ('head', 'head'),
+    ]
+    choices_field = models.CharField(max_length=6, default='работа', choices=CHOICES, verbose_name='выбор')
     photo = models.ImageField(default='without_photo/without_photo.jpg', upload_to="photos_works/",
                               verbose_name="фотография")
+    header = models.CharField(max_length=100, blank=True, default=' ', verbose_name='заголовок')
+    text = models.TextField(max_length=1000, blank=True, default=' ', verbose_name='текст')
     flag_active = models.BooleanField(default=True, verbose_name='активность')
     date_time_create = models.DateTimeField(auto_now_add=True,
                                             verbose_name="дата и время добавления")
@@ -86,11 +94,20 @@ class WorksModel(models.Model):
     def __str__(self):
         return self.photo.name
 
+    def get_choice(self):
+        return self.choices_field
+
     __str__.short_description = "фото"
+    get_choice.short_description = 'объект'
 
 
 class NewsStocksModel(models.Model):
     id = models.IntegerField(db_index=True, unique=True, primary_key=True, auto_created=True, verbose_name='индекс')
+    CHOICES = [
+        ('новость и акция', 'новость и акция'),
+        ('head', 'head'),
+    ]
+    choices_field = models.CharField(max_length=15, default='новость и акция', choices=CHOICES, verbose_name='выбор')
     header = models.CharField(max_length=100, blank=True, default=' ', verbose_name='заголовок')
     text = models.TextField(max_length=1000, blank=True, default=' ', verbose_name='текст')
     photo = models.ImageField(default='without_photo/without_photo.jpg', upload_to="photos_news_stocks/",
@@ -107,6 +124,11 @@ class NewsStocksModel(models.Model):
     def __str__(self):
         return self.header
 
+    def get_choice(self):
+        return self.choices_field
+
+    get_choice.short_description = 'объект'
+
 
 class ContactsModel(models.Model):
     CHOICES = [
@@ -118,8 +140,10 @@ class ContactsModel(models.Model):
         ("контакты", "контакты"),
         ("описание", "описание"),
         ("координаты точки на карте", "координаты точки на карте"),
+        ('head', 'head'),
     ]
     choices_field = models.CharField(max_length=25, choices=CHOICES, verbose_name='выбор')
+    header = models.CharField(max_length=100, blank=True, default=' ', verbose_name='заголовок')
     text = models.TextField(max_length=250, blank=True, null=True, verbose_name='текст')
     link = models.CharField(max_length=250, blank=True, null=True, verbose_name='ссылка')
     x = models.FloatField(max_length=30, blank=True, null=True, verbose_name='координата широты')
@@ -171,3 +195,20 @@ class PositionsPricesModel(models.Model):
 
     def __str__(self):
         return self.text
+
+
+class TagPricesModels(models.Model):
+    id = models.IntegerField(db_index=True, unique=True, primary_key=True, auto_created=True, verbose_name='индекс')
+    header = models.CharField(max_length=30, unique=True, verbose_name='заголовок')
+    text = models.TextField(max_length=1000, blank=True, null=True, verbose_name='текст')
+    flag_active = models.BooleanField(default=True, verbose_name='активность')
+    date_time_create = models.DateTimeField(auto_now_add=True,
+                                            verbose_name="дата и время добавления")
+    date_edition = models.DateTimeField(auto_now=True, verbose_name='дата и время редактирования')
+
+    class Meta:
+        verbose_name = 'Тег прайса'
+        verbose_name_plural = 'Теги прайса'
+
+    def __str__(self):
+        return self.header

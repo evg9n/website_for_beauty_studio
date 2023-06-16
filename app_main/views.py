@@ -1,7 +1,12 @@
 from django.shortcuts import render
 from django.views import View
 from .models import BaseModel, MainModel, WorksModel, NewsStocksModel, \
-    ContactsModel, PositionsPricesModel, HeaderPricesModel
+    ContactsModel, PositionsPricesModel, HeaderPricesModel, TagPricesModels
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+
+
+time_cache = 1
 
 
 def get_base():
@@ -10,10 +15,11 @@ def get_base():
         'logo': {'text': '', 'link': ''},
         'right': '',
         'links': [],
-        'button': {}
+        'button': {},
+        'head': [],
     }
 
-    base = BaseModel.objects.all()
+    base = BaseModel.objects.filter(flag_active=True)
     for element in base:
         if element.choices_field == 'меню':
             link = element.link
@@ -41,6 +47,7 @@ def get_base():
     return dict_base
 
 
+@method_decorator(cache_page(time_cache), name='get')
 class MainView(View):
 
     @classmethod
@@ -51,9 +58,10 @@ class MainView(View):
             masters=list(),
             certificates=list(),
             question_answer=list(),
+            head=list(),
         )
 
-        main = MainModel.objects.all()
+        main = MainModel.objects.filter(flag_active=True)
 
         for element in main:
 
@@ -86,6 +94,10 @@ class MainView(View):
                 text = element.text
                 dict_main['question_answer'].append(dict(header=header, text=text))
 
+            elif element.choices_field == 'head':
+                text = element.text
+                dict_main['head'].append(text)
+
         return dict_main
 
     def get(self, request):
@@ -98,38 +110,65 @@ class MainView(View):
         context['certificates'] = dict_main.get('certificates')
         context['count_certificates'] = len(dict_main.get('certificates'))
         context['question_answer'] = dict_main.get('question_answer')
-
-        print(context)
+        context['head'] = dict_main.get('head')
 
         return render(request, 'main/main.html', context=context)
 
-        # return render(request, 'main/main.html')
 
-
+@method_decorator(cache_page(time_cache), name='get')
 class WorksView(View):
+
+    @classmethod
+    def get_date(cls):
+        result = dict(photos=list(), head=list())
+
+        for elem in WorksModel.objects.filter(flag_active=True):
+            if elem.choices_field == 'работа':
+                result['photos'].append(elem)
+            elif elem.choices_field == 'head':
+                result['head'].append(elem.text)
+
+        return result
 
     def get(self, request):
         context = get_base()
-        context['photos'] = [photo for photo in WorksModel.objects.filter(flag_active=True)]
+        data_work = self.get_date()
+        context['photos'] = data_work['photos']
+        context['head'] = data_work['head']
 
         return render(request, 'main/works.html', context=context)
 
 
+@method_decorator(cache_page(time_cache), name='get')
 class NewsStocksView(View):
+
+    @classmethod
+    def get_date(cls):
+        result = dict(news_and_stocks=list(), head=list())
+
+        for elem in NewsStocksModel.objects.filter(flag_active=True):
+            if elem.choices_field == 'новость и акция':
+                result['news_and_stocks'].append(elem)
+            elif elem.choices_field == 'head':
+                result['head'].append(elem.text)
+
+        return result
 
     def get(self, request):
         context = get_base()
-        context['news_and_stocks'] = NewsStocksModel.objects.filter(flag_active=True)
+        data = self.get_date()
+        context['news_and_stocks'] = data['news_and_stocks']
+        context['head'] = data['head']
 
         return render(request, 'main/stock.html', context=context)
 
 
+@method_decorator(cache_page(time_cache), name='get')
 class PricesView(View):
 
     @classmethod
     def get_prices(cls):
         list_positions = PositionsPricesModel.objects.prefetch_related()
-
         data = list()
         for header in HeaderPricesModel.objects.select_related().filter(flag_active=True):
             positions = list()
@@ -148,23 +187,28 @@ class PricesView(View):
     def get(self, request):
         data = self.get_prices()
         context = get_base()
+
         context['headers'] = data['headers']
         context['last_header'] = data['last_header']
+        context['head'] = [elem.text for elem in TagPricesModels.objects.filter(flag_active=True)]
+
         return render(request, 'main/prices.html', context=context)
 
 
+@method_decorator(cache_page(time_cache), name='get')
 class ContactsView(View):
 
     @classmethod
     def __get_contacts(cls):
         data = ContactsModel.objects.filter(flag_active=True)
         result = dict(
-            links=list(),
+            links_offers=list(),
             vk=dict(),
             wa=dict(),
             contacts=list(),
             descriptions=list(),
-            coordinates=dict()
+            coordinates=dict(),
+            head=list()
         )
         for element in data:
             if element.choices_field == 'VK':
@@ -172,13 +216,15 @@ class ContactsView(View):
             elif element.choices_field == 'WhatsApp':
                 result['wa'] = {'text': element.text, 'link': element.link}
             elif element.choices_field == 'другое':
-                result['links'].append({'text': element.text, 'link': element.link})
+                result['links_offers'].append({'text': element.text, 'link': element.link})
             elif element.choices_field == 'контакты':
                 result['contacts'].append(element.text)
             elif element.choices_field == 'описание':
                 result['descriptions'].append(element.text)
             elif element.choices_field == 'координаты точки на карте':
                 result['coordinates'] = {'x': element.x, 'y': element.y}
+            elif element.choices_field == 'head':
+                result['head'].append(element.text)
 
         return result
 
@@ -187,10 +233,11 @@ class ContactsView(View):
         context = get_base()
         context['vk'] = contacts_data['vk'] if contacts_data['vk'] else False
         context['wa'] = contacts_data['wa'] if contacts_data['wa'] else False
-        context['links'] = contacts_data['links']
+        context['links_offers'] = contacts_data['links_offers']
         context['contacts'] = contacts_data['contacts']
         context['descriptions'] = contacts_data['descriptions']
         context['coordinates'] = contacts_data['coordinates'] if contacts_data['coordinates'] else {'x': 55.75,
                                                                                                     'y': 37.6167}
+        context['head'] = contacts_data['head']
 
         return render(request, 'main/contacts.html', context=context)

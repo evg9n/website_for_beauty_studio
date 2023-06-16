@@ -142,14 +142,14 @@ media/photos_works/*
 !media/photos_news_stocks/.gitkeep
 !media/photos_works/.gitkeep
 
-# migrations
-*/migrations/*
-!*/migrations/__init__.py
-
 # icon
 static/icon/*
 !static/icon/.gitkeep
 
+#migrations
+app_main/migrations/*.py
+!app_main/migrations/__init__.py
+
 #other
-config.py
+static/sitemap.xml
 passenger_wsgi.py
