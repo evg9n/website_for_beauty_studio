@@ -91,7 +91,7 @@ WSGI_APPLICATION = 'website_for_beauty_studio.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-debag_settings_database = {
+debug_settings_database = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
