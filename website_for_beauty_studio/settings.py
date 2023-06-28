@@ -112,7 +112,7 @@ settings_database = {
     }
 }
 
-DATABASES = debag_settings_database if DEBUG else settings_database
+DATABASES = debug_settings_database if DEBUG else settings_database
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
