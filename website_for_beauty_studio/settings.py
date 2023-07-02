@@ -55,6 +55,7 @@ AXES_COOLOFF_TIME = 24
 AXES_LOCKOUT_URL = '/'
 
 MIDDLEWARE = [
+    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -63,6 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
 TEMPLATE_DIRS = (BASE_DIR / 'templates',)
@@ -113,6 +115,15 @@ settings_database = {
 }
 
 DATABASES = debug_settings_database if DEBUG else settings_database
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': BASE_DIR / 'django_cache'
+    }
+}
+
+CACHE_MIDDLEWARE_SECONDS = int(environ.get('TIME_SECONDS_CACHE'))
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

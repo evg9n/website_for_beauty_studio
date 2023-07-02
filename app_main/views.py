@@ -2,11 +2,6 @@ from django.shortcuts import render
 from django.views import View
 from .models import BaseModel, MainModel, WorksModel, NewsStocksModel, \
     ContactsModel, PositionsPricesModel, HeaderPricesModel, TagPricesModels
-from django.utils.decorators import method_decorator
-from django.views.decorators.cache import cache_page
-
-
-time_cache = 1
 
 
 def get_base():
@@ -47,7 +42,6 @@ def get_base():
     return dict_base
 
 
-@method_decorator(cache_page(time_cache), name='get')
 class MainView(View):
 
     @classmethod
@@ -115,7 +109,6 @@ class MainView(View):
         return render(request, 'main/main.html', context=context)
 
 
-@method_decorator(cache_page(time_cache), name='get')
 class WorksView(View):
 
     @classmethod
@@ -139,7 +132,6 @@ class WorksView(View):
         return render(request, 'main/works.html', context=context)
 
 
-@method_decorator(cache_page(time_cache), name='get')
 class NewsStocksView(View):
 
     @classmethod
@@ -163,7 +155,6 @@ class NewsStocksView(View):
         return render(request, 'main/stock.html', context=context)
 
 
-@method_decorator(cache_page(time_cache), name='get')
 class PricesView(View):
 
     @classmethod
@@ -195,7 +186,6 @@ class PricesView(View):
         return render(request, 'main/prices.html', context=context)
 
 
-@method_decorator(cache_page(time_cache), name='get')
 class ContactsView(View):
 
     @classmethod
